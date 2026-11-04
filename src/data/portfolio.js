@@ -8,7 +8,7 @@ export const profile = {
   location: 'Technopark, Thiruvananthapuram, Kerala',
   email: 'gopika02062000@gmail.com',
   phone: '+91 98765 43210', // TODO: real phone (or remove)
-  github: 'https://github.com/gopikarajan', // TODO: real GitHub
+  github: 'https://github.com/codebygopika-2000',
   linkedin: '', // TODO: LinkedIn URL
   resumeUrl: '', // TODO: put resume.pdf in /public and set to 'resume.pdf'
   headline:
