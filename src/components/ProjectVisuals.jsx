@@ -309,4 +309,106 @@ function ClusterVisual({ accent }) {
   )
 }
 
-export const visuals = { pricing: PricingVisual, order: OrderVisual, architecture: ArchitectureVisual, cluster: ClusterVisual }
+/* ---------- Speech4all: phone OTP sign-in, then intake forms ---------- */
+const otp = ['4', '8', '1', '6']
+const forms = [
+  { name: 'Child intake form', status: 'Submitted' },
+  { name: 'Medical history', status: 'In progress' },
+  { name: 'Consent & privacy', status: 'To do' },
+]
+
+function IntakeVisual({ accent }) {
+  // 0–4: digits typed, 5: verified, 6–9: dashboard.
+  const step = useTicker(10, 650)
+  const signedIn = step >= 6
+  return (
+    <Window title="Speech4all · Client portal" status={signedIn ? '● Signed in' : 'Secure sign-in'}>
+      <div className="relative h-[268px] overflow-hidden">
+        <AnimatePresence mode="wait" initial={false}>
+          {!signedIn ? (
+            <motion.div
+              key="otp"
+              className="flex h-full flex-col items-center justify-center px-5 text-center"
+              initial={{ opacity: 0, x: -24 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -24 }}
+            >
+              <p className="text-sm font-medium text-white">Enter the code we sent</p>
+              <p className="mt-1 font-mono text-[11px] text-slate-500">+1 ••• ••• 4821</p>
+              <div className="mt-5 flex gap-2.5">
+                {otp.map((d, i) => {
+                  const filled = i < step
+                  return (
+                    <motion.span
+                      key={i}
+                      className="grid h-11 w-10 place-items-center rounded-lg border font-mono text-lg text-white"
+                      animate={{
+                        borderColor: step === 5 ? '#34d399' : filled || i === step ? accent : 'rgba(255,255,255,0.1)',
+                        scale: i === step - 1 && step <= 4 ? [1, 1.1, 1] : 1,
+                      }}
+                    >
+                      {filled ? d : ''}
+                    </motion.span>
+                  )
+                })}
+              </div>
+              <motion.p
+                className="mt-5 text-xs"
+                animate={{ color: step === 5 ? '#34d399' : '#64748b' }}
+              >
+                {step === 5 ? '✓ Verified with Cognito' : 'Passwordless · no account needed'}
+              </motion.p>
+            </motion.div>
+          ) : (
+            <motion.div
+              key="dash"
+              className="h-full p-4"
+              initial={{ opacity: 0, x: 24 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 24 }}
+            >
+              <p className="text-sm font-medium text-white">Welcome back, Priya</p>
+              <p className="mb-3 text-[11px] text-slate-500">Intake forms for Aarav&apos;s first session</p>
+              <div className="space-y-2">
+                {forms.map((f, i) => {
+                  const done = f.status === 'Submitted'
+                  return (
+                    <motion.div
+                      key={f.name}
+                      className="flex items-center justify-between rounded-lg border border-white/5 bg-white/[0.02] px-3 py-2.5 text-[11px]"
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.1 + i * 0.12 }}
+                    >
+                      <span className="text-slate-200">{f.name}</span>
+                      <span
+                        className="rounded-full px-2 py-0.5 font-mono text-[10px]"
+                        style={{
+                          color: done ? '#34d399' : f.status === 'To do' ? '#94a3b8' : accent,
+                          background: done ? '#34d39918' : f.status === 'To do' ? 'rgba(255,255,255,0.05)' : `${accent}1f`,
+                        }}
+                      >
+                        {f.status}
+                      </span>
+                    </motion.div>
+                  )
+                })}
+              </div>
+              <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-white/5">
+                <motion.div className="h-full rounded-full" style={{ background: accent }} initial={{ width: '0%' }} animate={{ width: '45%' }} transition={{ duration: 0.8, delay: 0.4 }} />
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+    </Window>
+  )
+}
+
+export const visuals = {
+  pricing: PricingVisual,
+  order: OrderVisual,
+  architecture: ArchitectureVisual,
+  cluster: ClusterVisual,
+  intake: IntakeVisual,
+}

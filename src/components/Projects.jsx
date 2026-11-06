@@ -125,7 +125,7 @@ export default function Projects() {
         <SectionTitle
           eyebrow="Projects"
           title="Platforms I've built"
-          intro="Production systems running for real customers, from pricing engines to telecom commerce and AI platforms."
+          intro="Production systems running for real customers, from pricing engines and telecom commerce to AI and healthcare platforms."
         />
 
         <Reveal>
