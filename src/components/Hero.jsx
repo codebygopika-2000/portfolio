@@ -23,7 +23,7 @@ function RotatingRole() {
   }, [])
   return (
     <span className="relative inline-flex h-[1.2em] overflow-hidden align-bottom">
-      <AnimatePresence mode="wait">
+      <AnimatePresence mode="popLayout" initial={false}>
         <motion.span
           key={profile.roles[i]}
           initial={{ y: '100%', opacity: 0 }}
@@ -122,10 +122,10 @@ export default function Hero() {
             </span>
             Open to new opportunities
           </motion.p>
-          <motion.h1 variants={item} className="font-display text-5xl font-bold leading-[1.05] tracking-tight text-white sm:text-7xl">
+          <motion.h1 variants={item} className="font-display text-[2.75rem] font-bold leading-[1.05] tracking-tight text-white sm:text-6xl xl:text-7xl">
             {profile.name}
           </motion.h1>
-          <motion.p variants={item} className="mt-4 font-display text-2xl font-medium text-slate-200 sm:text-4xl">
+          <motion.p variants={item} className="mt-4 font-display text-xl font-medium text-slate-200 sm:text-3xl xl:text-4xl">
             <RotatingRole />
           </motion.p>
           <motion.p variants={item} className="mt-6 max-w-xl text-lg leading-relaxed text-slate-400">

@@ -46,11 +46,11 @@ function PricingVisual({ accent }) {
         <span className="rounded-full border border-white/10 px-2.5 py-1 text-slate-400">Cost</span>
       </div>
       <div className="overflow-x-auto">
-        <table className="w-full min-w-[420px] text-left text-[11px]">
+        <table className="w-full text-left text-[10px] sm:text-[11px]">
           <thead className="border-y border-white/5 font-mono text-[10px] text-slate-500">
             <tr>
               <th className="px-3 py-2 font-normal">Resource</th>
-              <th className="px-2 font-normal">Grade</th>
+              <th className="hidden px-2 font-normal sm:table-cell">Grade</th>
               <th className="px-2 font-normal">Rate/h</th>
               {['W1', 'W2', 'W3', 'W4'].map((w) => (
                 <th key={w} className="px-2 font-normal">{w}</th>
@@ -60,8 +60,8 @@ function PricingVisual({ accent }) {
           <tbody>
             {rows.map((r, ri) => (
               <tr key={r.name} className="border-b border-white/5">
-                <td className="max-w-[110px] truncate px-3 py-2.5 text-slate-200">{r.name}</td>
-                <td className="px-2 text-slate-400">{r.grade}</td>
+                <td className="max-w-[84px] truncate px-3 py-2.5 text-slate-200 sm:max-w-[120px]">{r.name}</td>
+                <td className="hidden px-2 text-slate-400 sm:table-cell">{r.grade}</td>
                 <td className="px-2 font-mono text-slate-300">${r.rate}</td>
                 {r.alloc.map((a, ci) => {
                   const on = ri * 4 + ci < step
@@ -69,7 +69,7 @@ function PricingVisual({ accent }) {
                   return (
                     <td key={ci} className="p-0.5">
                       <motion.div
-                        className="rounded py-2 text-center font-mono font-semibold"
+                        className="rounded py-2 text-center font-mono font-semibold tabular-nums"
                         animate={{
                           backgroundColor: on ? `${accent}${Math.round(25 + a * 0.6).toString(16)}` : 'rgba(255,255,255,0.02)',
                           color: on ? '#fff' : '#475569',
@@ -91,7 +91,7 @@ function PricingVisual({ accent }) {
         <span>
           Sell <span className="font-semibold text-white">${Math.round(sell).toLocaleString('en-US')}</span>
         </span>
-        <span style={{ color: accent }}>⚡ rate card lookup</span>
+        <span className="hidden sm:inline" style={{ color: accent }}>⚡ rate card lookup</span>
         <span>Resources {rows.length}</span>
       </div>
     </Window>
@@ -235,7 +235,7 @@ function ArchitectureVisual({ accent }) {
               </rect>
             )}
             <rect x={n.x} y={n.y} width={n.w} height={H} rx="8" fill={n.main ? `${accent}22` : '#0b1120'} stroke={n.main ? accent : 'rgba(255,255,255,0.15)'} />
-            <text x={n.x + n.w / 2} y={n.y + H / 2 + 4} textAnchor="middle" fontSize="11" fill="#e2e8f0">
+            <text x={n.x + n.w / 2} y={n.y + H / 2 + 4} textAnchor="middle" fontSize="12" fill="#e2e8f0">
               {n.label}
             </text>
           </g>
